@@ -150,3 +150,46 @@ A --> |searchProduct| B
 A --> |deleteProduct| B
 A --> |updateProduct| B
 ```
+---
+# 용어 사전 (상품만)
+| 한글명     | 영문명           | 설명                           |
+|---------|---------------|------------------------------|
+| 사용자     | user          | 사용자 유형을 가지는 사람을 의미한다.        |
+| 위시리스트   | wishList      | 구매자가 관심있는 상품을 담는다.           |
+| 상품      | product       | 이름, 가격, 이미지 URL을 입력받아 등록한 물건 |
+| 상품 리스트  | productList | 등록된 상품의 목록                   |
+| 상품 조회   | search        | 상품 리스트을 불러온다.                |
+| 상품 등록   | createProduct | 상품리스트에 상품을 등록한다.             |
+| 상품 삭제   | deleteProduct | 상품리스트에서 상품을 삭제한다.            |
+| 상품 수정   | updateProduct | 상품리스트에서 상품 상세 내용을 수정한다.      |
+| 비속어     | profanity     | 상품에 포함될 수 없는 단어              |
+
+
+# 모델링
+- **user**는 **productList**를 **search**를 할 수 있다.
+- **user**는 **productList**에서 **createProduct**를 할 수 있다.
+- **user**는 **productList**에서 **deleteProduct**를 할 수 있다.
+- **user**는 **productList**에서 **updateProduct**를 할 수 있다.
+- **user**는 **productList**에서 **addWishList**를 할 수 있다.
+- **user**는 **productList**에서 **deleteWishList**를 할 수 있다.
+- **user**는 **productList**에서 **updateWishList**를 할 수 있다.
+
+```mermaid
+flowchart LR
+
+A([user])
+A --> |addProduct| B[productList]
+A --> |searchProduct| B
+A --> |deleteProduct| B
+A --> |updateProduct| B
+```
+
+```mermaid
+flowchart LR
+
+D([user])
+D --> |search| G[productList]
+G --> |addWishList| H[wishList]
+D --> |deleteWishList| H
+D --> |updateWishList| H
+```
