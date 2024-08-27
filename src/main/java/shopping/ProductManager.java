@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import shopping.common.ApiResponse;
 import shopping.dto.ModifyProductRequestDto;
 import shopping.dto.ProductDto;
+import shopping.entity.Name;
 import shopping.entity.Product;
 import shopping.repository.ProductRepository;
 
@@ -20,7 +21,7 @@ public class ProductManager {
     }
 
     public ApiResponse addProduct(ProductDto productDto) {
-        if(productRepository.findByName(productDto.getName()).isPresent()) {
+        if(productRepository.findByName(new Name(productDto.getName())).isPresent()) {
             throw new RuntimeException("동일한 상품명이 이미 존재합니다.");
         }
 

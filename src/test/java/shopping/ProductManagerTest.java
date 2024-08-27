@@ -12,6 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import shopping.common.ApiResponse;
 import shopping.dto.ModifyProductRequestDto;
 import shopping.dto.ProductDto;
+import shopping.entity.Name;
 import shopping.entity.Product;
 import shopping.repository.ProductRepository;
 
@@ -54,7 +55,7 @@ class ProductManagerTest {
     @DisplayName("중복 상품 추가시 실패")
     void failToAddProductCauseDuplicateProduct() {
         ProductDto product = new ProductDto("name", 1000, "http://test.com/test.jpg");
-        given(productRepository.findByName(product.getName())).willReturn(any());
+        given(productRepository.findByName(new Name(product.getName()))).willReturn(any());
         assertThatThrownBy(()->productManager.addProduct(product)).isInstanceOf(RuntimeException.class);
     }
 
