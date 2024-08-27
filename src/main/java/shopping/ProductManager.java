@@ -14,21 +14,25 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ProductManager {
     private final ProductRepository productRepository;
     private AtomicLong nextId;
+    private final PurgomalumCliect purgomalumCliect;
 
     public ProductManager(ProductRepository productRepository) {
         nextId = new AtomicLong();
         this.productRepository = productRepository;
+        purgomalumCliect = new PurgomalumCliect();
     }
 
     public ApiResponse addProduct(ProductDto productDto) {
-        if(productRepository.findByName(new Name(productDto.getName())).isPresent()) {
+        if(productRepository.findByName(new Name(productDto.getName(), purgomalumCliect)).isPresent()) {
             throw new RuntimeException("동일한 상품명이 이미 존재합니다.");
         }
+
+        Name name = new Name(productDto.getName(), purgomalumCliect);
 
         Product product;
         product = new Product(
                 nextId.incrementAndGet(),
-                productDto.getName(),
+                name,
                 productDto.getPrice(),
                 productDto.getImageUrl()
         );

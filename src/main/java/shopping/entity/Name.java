@@ -11,11 +11,7 @@ public class Name {
     public Name() {
     }
 
-    public Name(String value){
-        PurgomalumCliect purgomalumCliect = new PurgomalumCliect();
-        isVaild(value, purgomalumCliect);
-        this.value = value;
-    }
+
 
     public Name(String value, Profanity profanity) {
         isVaild(value, profanity);

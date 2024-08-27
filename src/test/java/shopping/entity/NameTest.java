@@ -17,11 +17,3 @@ class NameTest {
         assertThatThrownBy(()-> new Name("욕설", fakedProfanity)).isInstanceOf(IllegalArgumentException.class);
     }
 }
-
-class FakedProfanity implements Profanity {
-    private List<String> list = List.of("욕설");
-    @Override
-    public boolean contains(String text) {
-        return list.contains(text);
-    }
-}

@@ -55,7 +55,9 @@ class ProductManagerTest {
     @DisplayName("중복 상품 추가시 실패")
     void failToAddProductCauseDuplicateProduct() {
         ProductDto product = new ProductDto("name", 1000, "http://test.com/test.jpg");
-        given(productRepository.findByName(new Name(product.getName()))).willReturn(any());
+        Name name = new Name(product.getName(), new FakedProfanity());
+
+        given(productRepository.findByName(name)).willReturn(any());
         assertThatThrownBy(()->productManager.addProduct(product)).isInstanceOf(RuntimeException.class);
     }
 
@@ -63,7 +65,7 @@ class ProductManagerTest {
     @DisplayName("상품 수정")
     void updateProduct() {
         ModifyProductRequestDto request = new ModifyProductRequestDto(1L, "수정상품", 1000, "http://test.com/test.jpg");
-        Product originProduct = new Product("name", 1000, "http://test.com/test.jpg");
+        Product originProduct = new Product(new Name("name", new FakedProfanity()), 1000, "http://test.com/test.jpg");
 
         given(productRepository.findById(1L)).willReturn(Optional.of(originProduct));
 
@@ -92,7 +94,7 @@ class ProductManagerTest {
     @Test
     @DisplayName("상품 제거")
     void deleteProduct() {
-        Product product = new Product(1L, "name", 1000, "http://test.com/test.jpg");
+        Product product = new Product(1L, new Name("name", new FakedProfanity()), 1000, "http://test.com/test.jpg");
         given(productRepository.findById(1L)).willReturn(Optional.of(product));
 
         productManager.deleteData(product.getId());
@@ -102,14 +104,14 @@ class ProductManagerTest {
     @Test
     @DisplayName("상품 제거 실패")
     void failToDeleteProduct() {
-        Product product = new Product(1L, "name", 1000, "http://test.com/test.jpg");
+        Product product = new Product(1L, new Name("name", new FakedProfanity()), 1000, "http://test.com/test.jpg");
         assertThatThrownBy(()-> productManager.deleteData(product.getId())).isInstanceOf(RuntimeException.class);
     }
 
     @Test
     @DisplayName("상품 조회")
     void getProducts() {
-        Product product = new Product(1L, "name", 1000, "http://test.com/test.jpg");
+        Product product = new Product(1L, new Name("name", new FakedProfanity()), 1000, "http://test.com/test.jpg");
         given(productRepository.findById(1L)).willReturn(Optional.of(product));
 
         ProductDto actual = productManager.getData(1L);
@@ -122,7 +124,7 @@ class ProductManagerTest {
     @Test
     @DisplayName("상품 조회 실패")
     void failToGetProducts() {
-        Product product = new Product(1L, "name", 1000, "http://test.com/test.jpg");
+        Product product = new Product(1L, new Name("name", new FakedProfanity()), 1000, "http://test.com/test.jpg");
         given(productRepository.findById(1L)).willReturn(Optional.empty());
         assertThatThrownBy(()-> productManager.getData(1L)).isInstanceOf(RuntimeException.class);
     }

@@ -16,15 +16,15 @@ public class Product {
 
     public Product() {}
 
-    public Product(long id, String name, int price, String imageUrl) {
+    public Product(long id, Name name, int price, String imageUrl) {
         this.id = id;
-        this.name = new Name(name);
+        this.name = name;
         this.price = price;
         this.image = new Image(imageUrl);
     }
 
-    public Product(String name, int price, String imageUrl) {
-        this.name = new Name(name);
+    public Product(Name name, int price, String imageUrl) {
+        this.name = name;
         this.price = price;
         this.image = new Image(imageUrl);
     }
